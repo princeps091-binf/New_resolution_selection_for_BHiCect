@@ -23,6 +23,12 @@ chr_dat_l<-lapply(chr_dat_l,function(x){
 })
 
 
-chr_dat_l[[6]] %>% ggplot(.,aes(KR,raw))+geom_point()
+gg_res_scatter<-chr_dat_l[[5]] %>% ggplot(.,aes(KR,raw))+geom_point()+scale_x_log10()+scale_y_log10()
 
-
+ggsave("./img/KR_vs_raw_10kb.png",gg_res_scatter)
+do.call(bind_rows,chr_dat_l[1:4])%>% 
+  ggplot(.,aes(KR,raw))+
+  geom_point()+
+  facet_wrap(res~.)+
+  scale_x_log10()+scale_y_log10()
+chr_dat_l[[3]] %>% mutate(IO=raw>=1000) %>% summarise(Rao.criteria=sum(IO)/n())
