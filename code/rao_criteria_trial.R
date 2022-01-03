@@ -31,4 +31,7 @@ do.call(bind_rows,chr_dat_l[1:4])%>%
   geom_point()+
   facet_wrap(res~.)+
   scale_x_log10()+scale_y_log10()
-chr_dat_l[[3]] %>% mutate(IO=raw>=1000) %>% summarise(Rao.criteria=sum(IO)/n())
+
+do.call(bind_rows,lapply(chr_dat_l, function(x){
+ x %>% summarise(Rao.criteria=quantile(raw,0.2)>=1000,quant.1k=sum(raw>=1000)/n(),res=unique(res))
+}))
