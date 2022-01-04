@@ -28,6 +28,8 @@ names(chr_dat_l)<-res_set
 spec_res_file<-'~/Documents/multires_bhicect/data/GM12878/spec_res/'
 base::load(paste0(spec_res_file,chromo,'_spec_res.Rda'))
 tmp_cl<-names(chr_spec_res$cl_member)[sample(1:length(chr_spec_res$cl_member),1)]
+tmp_cl<-names(chr_spec_res$cl_member)[1]
+
 cl_res<-strsplit(tmp_cl,split="_")[[1]][1]
 cl_tbl<-tibble(chr=chromo,res=cl_res,cl=tmp_cl,bins=list(as.numeric(chr_spec_res$cl_member[[tmp_cl]]))) %>% 
   unnest(cols=c(bins))
