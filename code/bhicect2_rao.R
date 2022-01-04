@@ -235,7 +235,7 @@ res_num<-c(1e6,5e5,1e5,5e4,1e4,5e3)
 names(res_num)<-res_set
 KR_dat_file<-'~/Documents/multires_bhicect/data/GM12878/'
 raw_dat_file<-'~/Documents/multires_bhicect/data/GM12878/raw/'
-res_file<-'~/Documents/multires_bhicect/data/GM12878/spec_res/Rao_criteria'
+res_file<-'~/Documents/multires_bhicect/data/GM12878/spec_res/Rao_criteria/'
 
 chromo<-'chr22'
 
@@ -285,4 +285,4 @@ if(any(colSums(chr_mat)==0)){
 }
 print(paste(i,':','spectral clustering'))
 chr_spec_res<- spec_bipart(chr_mat,g_chr1,res_set,res_num,chr_dat_l)
-save(chr_spec_res,file = paste0(res_file,i,'_spec_res.Rda'))
+save(chr_spec_res,file = paste0(res_file,chromo,'_spec_res.Rda'))

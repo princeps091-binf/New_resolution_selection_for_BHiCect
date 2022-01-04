@@ -36,3 +36,13 @@ cl_tbl<-tibble(chr=chromo,res=cl_res,cl=tmp_cl,bins=list(as.numeric(chr_spec_res
 chr_dat_l[[unique(cl_tbl$res)]] %>% 
   filter(X1 %in% cl_tbl$bins | X1 %in% cl_tbl$bins) %>% 
   summarise(Rao.criteria=quantile(raw,0.2)>=1000,quant.1k=sum(raw>=1000)/n())
+#############################################################
+## Load the original BHiCect results 
+spec_res_file<-'~/Documents/multires_bhicect/data/GM12878/spec_res/Rao_criteria/'
+base::load(paste0(spec_res_file,chromo,'_spec_res.Rda'))
+tmp_cl<-names(chr_spec_res$cl_member)[sample(1:length(chr_spec_res$cl_member),1)]
+tmp_cl<-names(chr_spec_res$cl_member)[1]
+
+cl_res<-strsplit(tmp_cl,split="_")[[1]][1]
+cl_tbl<-tibble(chr=chromo,res=cl_res,cl=tmp_cl,bins=list(as.numeric(chr_spec_res$cl_member[[tmp_cl]]))) %>% 
+  unnest(cols=c(bins))
