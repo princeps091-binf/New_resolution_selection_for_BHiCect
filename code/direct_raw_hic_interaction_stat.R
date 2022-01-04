@@ -24,6 +24,14 @@ chr_dat_l<-lapply(chr_dat_l,function(x){
 })
 names(chr_dat_l)<-res_set
 #############################################################
+do.call(bind_rows,lapply(chr_dat_l,function(dat){
+  
+  dat %>%  
+    summarise(res=unique(res),m=quantile(raw,0.2))
+})) %>% 
+  mutate(res=fct_relevel(res,res_set)) 
+
+
 neighbour_HiC_tbl<-do.call(bind_rows,lapply(chr_dat_l,function(dat){
   
   dat %>% filter(X1!=X2) %>% mutate(d=abs(X1-X2)) %>% filter(d<=min(d))
@@ -41,3 +49,7 @@ neighbour_HiC_tbl %>%
 neighbour_HiC_tbl %>% 
   group_by(res) %>% 
   summarise(m=median(raw))
+
+neighbour_HiC_tbl %>% 
+  group_by(res) %>% 
+  summarise(m=quantile(raw,0.2))
